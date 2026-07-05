@@ -2,6 +2,8 @@
 
 A single-file, self-contained HTML tool for generating printable, highly customizable exam answer sheets (built for DepEd Philippines high school use, but works for any school).
 
+**Live demo:** https://trashpenguin.github.io/answer-sheet-generator/
+
 ## Features
 - Customizable header text (region/division, school name, test title, subject, quarter)
 - Toggle student fields: Name, LRN, Grade & Section, Date, Teacher, Score box
@@ -15,8 +17,21 @@ A single-file, self-contained HTML tool for generating printable, highly customi
 - Upload your own school logo to replace the default, right in the browser (no server, no re-upload needed each session)
 
 ## Usage
-1. Open `deped_answer_sheet.html` in any browser.
-2. Adjust the settings in the control panel — the preview updates live.
-3. Click **Print / Save as PDF**. The control panel automatically hides itself on the printed page.
+
+### Online
+Open the live demo link above in any browser — no setup needed.
+
+### Locally
+1. Download `index.html` (or `deped_answer_sheet.html`) from this repo.
+2. Open it in any browser.
+3. Adjust the settings in the control panel — the preview updates live.
+4. Click **Print / Save as PDF**. The control panel automatically hides itself on the printed page.
 
 No installation, build step, or server required — it's a single static HTML file.
+
+## Files
+- `index.html` — served by GitHub Pages at the live demo URL
+- `deped_answer_sheet.html` — identical copy, kept under its original filename for direct download
+
+## Hosting
+Deployed with GitHub Pages from the `main` branch, root path.
