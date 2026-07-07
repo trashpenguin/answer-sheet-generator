@@ -188,6 +188,7 @@
     .footer-note { display: none; }
     .overflow-warning { display: none !important; }
     .sheet-copy.overflowing { outline: none; }
+    #halfPageTip { display: none !important; }
   }
 </style>
 </head>
@@ -291,6 +292,10 @@
       </select></div>
   </div>
 
+  <div id="halfPageTip" class="hint" style="display:none; margin-top:8px; background:#fff8e1; border:1px solid #f0d98c; padding:8px 10px; border-radius:6px; color:#6b5900;">
+    💡 In the print dialog, open <strong>More settings</strong> and set <strong>Margins</strong> to <strong>None</strong> (or the smallest option). Some print drivers ignore the page's own margin and use their own bigger default, which can push the second half onto a new page.
+  </div>
+
   <div class="field" style="margin-top:12px;">
     <label>Density (tighter rows = shorter page)</label>
     <div class="range-row">
@@ -341,13 +346,13 @@ function resetSchoolLogo() {
 
 const PAGE_HEIGHT_IN = { letter: 11, a4: 11.6929, legal: 14 };
 const PAGE_MARGIN_IN = 0.4; // matches @page margin below, top+bottom = 2x this
-
 const CUT_LINE_HEIGHT_IN = 0.16;
+const SAFETY_BUFFER_IN = 0.35; // extra slack in case the print dialog overrides @page margin with a bigger one
 
 function getHalfHeightIn() {
   const size = document.getElementById('paperSize').value;
   const pageHeight = PAGE_HEIGHT_IN[size] || 11;
-  const printable = pageHeight - (PAGE_MARGIN_IN * 2);
+  const printable = pageHeight - (PAGE_MARGIN_IN * 2) - SAFETY_BUFFER_IN;
   return (printable - CUT_LINE_HEIGHT_IN) / 2;
 }
 
@@ -529,6 +534,7 @@ function buildSheetInner() {
 function render() {
   const inner = buildSheetInner();
   const pageUsage = document.getElementById('pageUsage').value;
+  document.getElementById('halfPageTip').style.display = (pageUsage === 'half') ? 'block' : 'none';
   let finalHtml = '';
 
   if (pageUsage === 'half') {
