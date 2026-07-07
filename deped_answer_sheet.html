@@ -573,14 +573,19 @@ function fitHalfPageContent(pageUsage) {
     const targetHeight = box.clientHeight;
 
     if (naturalHeight > targetHeight) {
-      const scale = Math.max(0.5, (targetHeight / naturalHeight) * 0.99); // 1% safety margin, never shrink below 50%
+      const scale = Math.max(0.12, (targetHeight / naturalHeight) * 0.99); // 1% safety margin; 0.12 is just a sanity floor to avoid a zero/negative transform
       [w1, w2].forEach(function(el) {
         el.style.transformOrigin = 'top left';
         el.style.transform = 'scale(' + scale + ')';
         el.style.width = (100 / scale) + '%';
       });
       warningBox.style.display = 'block';
-      warningBox.textContent = 'ℹ Text was shrunk to ' + Math.round(scale * 100) + '% so all items fit within half a page. If it looks too small, reduce the number of items or add more columns instead.';
+      const pct = Math.round(scale * 100);
+      if (scale < 0.55) {
+        warningBox.textContent = 'ℹ Text was shrunk to ' + pct + '% to fit — that\'s quite small to read/write on. Consider reducing the number of items, adding more columns, or splitting content across more sections/pages.';
+      } else {
+        warningBox.textContent = 'ℹ Text was shrunk to ' + pct + '% so all items fit within half a page. If it looks too small, reduce the number of items or add more columns instead.';
+      }
     } else {
       warningBox.style.display = 'none';
     }
